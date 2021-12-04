@@ -4,7 +4,13 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-    // Add Firebase Config Here
+    apiKey: "API_KEY",
+    authDomain: "AUTH_DOMAIN",
+    projectId: "PROJ_ID",
+    storageBucket: "STORAGE BUCKET",
+    messagingSenderId: "MORE DATA",
+    appId: "APP ID",
+    measurementId: "MEASUREMENT ID"
   };
 
 const firebaseApp = initializeApp(firebaseConfig);
