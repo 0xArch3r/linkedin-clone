@@ -7,8 +7,15 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/userSlice"
 
 function Header() {
+  const user = useSelector(selectUser)
+  
+  const onClick = () => {
+    console.log("logout")
+  }
   return (
     <div className='header'>
       <div className="header__left">
@@ -18,7 +25,7 @@ function Header() {
           />
           <div className="header__search">
             <SearchIcon />
-            <input type="text"/>
+            <input placeholder="Search" type="text"/>
           </div>
       </div>
 
@@ -28,10 +35,14 @@ function Header() {
         <HeaderOption title="Jobs" Icon={BusinessCenterIcon} />
         <HeaderOption title="Messaging" Icon={ChatIcon} />
         <HeaderOption title="Notifications" Icon={NotificationsIcon} />
-        <HeaderOption 
-          avatar="https://media-exp1.licdn.com/dms/image/C4E03AQHS9_733N6TTQ/profile-displayphoto-shrink_100_100/0/1584137033010?e=1643846400&v=beta&t=cXHCBPUzq9m5jqMVICRwO_E1ng4K7RXgr2MkZfU4wTE"
-          title="Me" 
-        />
+        { user ?
+          <HeaderOption 
+            avatar={user.photoUrl}
+            title="Me"
+            onClick={onClick} 
+          />
+          : ""}
+        
       </div>
     </div>
   )

@@ -31,7 +31,7 @@ function Feed() {
             name: "Anthony Almaguer",
             description: "Technical Account Manager",
             message: input,
-            photoUrl: "",
+            photoUrl: "https://media-exp1.licdn.com/dms/image/C4E03AQHS9_733N6TTQ/profile-displayphoto-shrink_100_100/0/1584137033010?e=1643846400&v=beta&t=cXHCBPUzq9m5jqMVICRwO_E1ng4K7RXgr2MkZfU4wTE",
             timestamp: serverTimestamp()
         })
         setInput("")
