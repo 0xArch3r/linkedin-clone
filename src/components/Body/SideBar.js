@@ -27,7 +27,7 @@ function SideBar() {
             <Avatar
                 src={user.photoUrl}
                 className="sidebar__avatar"
-            />
+            >{user.email[0]}</Avatar>
             <h2>{user.displayName}</h2>
             <h4>Technical Account Manager | OSCP</h4>
           </div>

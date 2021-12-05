@@ -7,11 +7,23 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { useSelector } from "react-redux";
-import { selectUser } from "../../features/userSlice"
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, logout } from "../../features/userSlice"
+import { auth } from "../../firebase"
+import { signOut } from 'firebase/auth'
 
 function Header() {
   const user = useSelector(selectUser)
+  const dispatch = useDispatch();
+
+  const logoutOfApp = () => {
+    dispatch(logout())
+    signOut(auth).then(() => {
+      console.log("Signed Out")
+    }).catch((err) => {
+      console.log("Error Signing Out: " + err.message)
+    })
+  }
   
   const onClick = () => {
     console.log("logout")
@@ -30,16 +42,16 @@ function Header() {
       </div>
 
       <div className="header__right">
-        <HeaderOption title="Home" Icon={HomeIcon} />
+        <HeaderOption title="Home" Icon={HomeIcon} selected/>
         <HeaderOption title="My Network" Icon={SupervisorAccountIcon} />
         <HeaderOption title="Jobs" Icon={BusinessCenterIcon} />
         <HeaderOption title="Messaging" Icon={ChatIcon} />
         <HeaderOption title="Notifications" Icon={NotificationsIcon} />
         { user ?
           <HeaderOption 
-            avatar={user.photoUrl}
+            avatar={user}
             title="Me"
-            onClick={onClick} 
+            onClick={logoutOfApp} 
           />
           : ""}
         

@@ -31,6 +31,11 @@
     box-shadow: 0 0 10px 5px #0074b1; 
 }
 
+.login > form > h5 {
+    color: red;
+    font-size: small;
+}
+
 .login > form > button {
     width: 365px;
     height: 50px;

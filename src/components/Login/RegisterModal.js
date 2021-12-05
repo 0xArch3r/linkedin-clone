@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './RegisterModal.css'
-import { auth } from "../../firebase";
+import { auth } from "../../firebase.js";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 
@@ -54,7 +54,7 @@ function RegisterModal({ showModal, handleLogin }) {
                 console.log(auth.currentUser)
                 updateProfile(userCredential.user, {
                     displayName: name,
-                    photoUrl: photoUrl,
+                    photoURL: photoUrl,
                 }).then(() => {
                     handleLogin(userCredential.user.email, userCredential.user.uid, name, photoUrl)
                 })

@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux';
 import './App.css';
 import Header from './components/Headers/Header';
 import SideBar from './components/Body/SideBar';
+import WidgetsBar from "./components/Body/WidgetsBar"
 import Feed from './components/Body/Feed/Feed';
 import { selectUser, logout, login } from "./features/userSlice";
 import { useSelector } from "react-redux";
 import Login from './components/Login/Login';
-import { auth } from './firebase';
+import { auth } from './firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
 function App() {
@@ -17,11 +18,12 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log(user)
         dispatch(login({
           email: user.email,
           uid: user.uid,
           displayName: user.displayName,
-          photoUrl: user.photoUrl
+          photoUrl: user.photoURL
         }))
       } else {
         dispatch(logout({}))
@@ -39,7 +41,7 @@ function App() {
         <div className="div app__body">
           <SideBar />
           <Feed />
-          {/* Widgets */ }
+          <WidgetsBar />
         </div>
       )}
     </div>

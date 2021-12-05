@@ -1,13 +1,17 @@
 import React, {useState, useEffect } from 'react'
 import './Feed.css';
+import FlipMove from "react-flip-move";
 import InputContainer from './InputContainer';
 import Post from './Post';
-import { db } from "../../../firebase";
+import { db } from "../../../firebase.js";
 import { query, orderBy, onSnapshot, collection, addDoc, serverTimestamp } from 'firebase/firestore';
-
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../features/userSlice";
+ 
 function Feed() {
     const [posts, setPosts] = useState([]);
     const [input, setInput] = useState("");
+    const user = useSelector(selectUser);
 
     const handleInputChange = (e) => {
         setInput(e.target.value)
@@ -28,10 +32,10 @@ function Feed() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await addDoc(collection(db, "posts"), {
-            name: "Anthony Almaguer",
-            description: "Technical Account Manager",
+            name: user.displayName,
+            description: user.email,
             message: input,
-            photoUrl: "https://media-exp1.licdn.com/dms/image/C4E03AQHS9_733N6TTQ/profile-displayphoto-shrink_100_100/0/1584137033010?e=1643846400&v=beta&t=cXHCBPUzq9m5jqMVICRwO_E1ng4K7RXgr2MkZfU4wTE",
+            photoUrl: user.photoUrl,
             timestamp: serverTimestamp()
         })
         setInput("")
@@ -39,7 +43,9 @@ function Feed() {
 
     return (
         <div className="feed">
-            <InputContainer value={input} onChangeFunc={handleInputChange} onSubmit={handleSubmit}/> 
+            <InputContainer value={input} onChangeFunc={handleInputChange} onSubmit={handleSubmit}/>
+
+            <FlipMove>
             {posts.map( ({ id, data: { name, description, message, photoUrl } }) => (
                 <Post
                     key={id}
@@ -49,6 +55,7 @@ function Feed() {
                     photoUrl={photoUrl}
                 />
             ))}
+            </FlipMove>
         </div>
     )
 }

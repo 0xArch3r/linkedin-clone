@@ -3,11 +3,14 @@ import './Login.css';
 import RegisterModal from './RegisterModal';
 import { useDispatch } from "react-redux";
 import { login } from '../../features/userSlice'
+import { auth } from "../../firebase"
+import { signInWithEmailAndPassword } from "firebase/auth"
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [registerModal, setRegisterModal] = useState(false);
+    const [loginFail, setLoginFail] = useState(false);
     const dispatch = useDispatch();
 
     const handleChange = (e) => {
@@ -17,6 +20,7 @@ function Login() {
             setPassword(e.target.value);
         }
     }
+
 
 
     const showRegisterModal = () => {
@@ -33,7 +37,17 @@ function Login() {
     }
     const loginToApp = (e) => {
         e.preventDefault();
-        
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userAuth) => {
+            dispatch(login({
+                displayName: userAuth.user.displayName,
+                email: userAuth.user.email,
+                uid: userAuth.user.uid,
+                photoUrl: userAuth.user.photoURL
+            }))
+        }).catch((error) => {
+            setLoginFail(true)
+        })
     }
 
     return (
@@ -59,6 +73,7 @@ function Login() {
                     id="password" 
                 />
                 <button onClick={loginToApp}>Sign In</button>
+                {loginFail ? <h5>Invalid Login Credentials</h5> : ""}
             </form>
 
             <p>Not a Member?{" "} 

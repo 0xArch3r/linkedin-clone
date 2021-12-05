@@ -7,6 +7,16 @@
     cursor: pointer;
 }
 
+.headerOption__selected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    color: black;
+    border-bottom: 2px solid black;
+    cursor: pointer;    
+}
+
 .headerOption:hover {
     color: black;
 }
